@@ -1,0 +1,29 @@
+---
+- name: locale is present
+  locale_gen:
+    name="{{ item }}"
+    state=present
+  with_items: "{{ debian-base_locales }}"
+  notify: update system locale
+
+- name: debconf system time area and zone
+  debconf:
+    name=tzdata
+    vtype="select"
+    question="{{ item.question }}"
+    value="{{ item.value }}"
+  with_items:
+    - question: "tzdata/Areas"
+      value: "{{ debian-base_tzdata_area }}"
+    - question: "tzdata/Zones/{{ debian-base_tzdata_area }}"
+      value: "{{ debian-base_tzdata_zone }}"
+  notify: update timezone
+
+- name: /etc/timezone is correct
+  template:
+    src="timezone.j2"
+    dest="/etc/timezone"
+    owner=root
+    group=root
+    mode=0644
+  notify: update timezone
