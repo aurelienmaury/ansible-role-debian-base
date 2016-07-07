@@ -4,7 +4,7 @@
 
 - name: update system locale
   shell: >
-    /usr/sbin/update-locale LANG={{ debian-base_locales[0] }} LANGUAGE={{ debian-base_lang }}
+    /usr/sbin/update-locale LANG={{ debian_base_locales[0] }} LANGUAGE={{ debian_base_lang }}
 
 - name: restart ntp
   service:
