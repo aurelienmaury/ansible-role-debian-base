@@ -59,6 +59,7 @@
     - zlib1g-dev
     - zlib1g
     - libcurl4-openssl-dev
+    - unzip
 
 - include: ntp.yml
 - include: locale.yml
